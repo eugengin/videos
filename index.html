@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Видео — LED-MC</title>
-<style>
-  body {
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
-  }
-  video {
-    width:80%;
-    max-width:960px;
-    border:4px solid #F7C948;
-    border-radius:12px;
-    box-shadow:0 0 20px rgba(247,201,72,0.6);
-    cursor:pointer;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Видео LED-MC</title>
+  <style>
+    body {
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#000;
+    }
+    video {
+      max-width:90%;
+      max-height:90%;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(0,0,0,0.6);
+    }
+  </style>
 </head>
 <body>
+  <video id="myVideo" src="video.mp4" muted playsinline loop></video>
 
-<video id="myVideo" muted preload="auto">
-  <source src="led-mc mapping Bolshoi Theater.mp4" type="video/mp4">
-  Ваш браузер не поддерживает видео.
-</video>
+  <script>
+    const video = document.getElementById("myVideo");
 
-<script>
-const vid = document.getElementById("myVideo");
+    // Автовоспроизведение на смартфонах
+    video.play().catch(()=>{}); 
 
-vid.onmouseover = () => vid.play();
-vid.onmouseout  = () => {
-  vid.pause();
-  vid.currentTime = 0; // возвращаемся в начало
-};
-</script>
-
+    // Поведение на ПК
+    video.addEventListener("mouseenter", () => video.play());
+    video.addEventListener("mouseleave", () => video.pause());
+  </script>
 </body>
 </html>
