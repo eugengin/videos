@@ -2,36 +2,58 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Видео LED-MC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LED-MC Video</title>
   <style>
-    body {
-      margin:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:#000;
+    /* Сброс отступов */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    /* Видео на весь экран */
     video {
-      max-width:90%;
-      max-height:90%;
-      border-radius:12px;
-      box-shadow:0 0 20px rgba(0,0,0,0.6);
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <video id="myVideo" src="video.mp4" muted playsinline loop></video>
+
+  <!-- Видео в корне репозитория -->
+  <video id="ledVideo" src="video.mp4" preload="auto" playsinline muted></video>
 
   <script>
-    const video = document.getElementById("myVideo");
+    const video = document.getElementById("ledVideo");
 
-    // Автовоспроизведение на смартфонах
-    video.play().catch(()=>{}); 
+    // Автоплей при наведении мышки (десктоп)
+    video.addEventListener("mouseenter", () => {
+      video.play();
+    });
+    video.addEventListener("mouseleave", () => {
+      video.pause();
+      video.currentTime = 0;
+    });
 
-    // Поведение на ПК
-    video.addEventListener("mouseenter", () => video.play());
-    video.addEventListener("mouseleave", () => video.pause());
+    // Автоплей при тапе (смартфоны)
+    video.addEventListener("touchstart", () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }, {passive: true});
   </script>
+
 </body>
 </html>
